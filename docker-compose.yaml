@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: hw02
+      POSTGRES_USER: rest_app
+      POSTGRES_PASSWORD: 567234
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: hw02
+      POSTGRES_USER: rest_app
+      POSTGRES_PASSWORD: 567234
+    depends_on:
+      - postgres
